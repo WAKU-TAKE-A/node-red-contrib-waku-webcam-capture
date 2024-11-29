@@ -1,0 +1,60 @@
+<script type="text/javascript">
+  RED.nodes.registerType('webcam-capture', {
+    category: "output",
+    color: "#88A882",
+    defaults: {
+      name: { value: "" }
+    },
+    inputs: 1,
+    outputs: 1,
+    icon: "font-awesome/fa-image",
+    align: 'right',
+    label: function() {
+      return this.name || "webcam-capture";
+    }
+  });
+</script>
+
+<script type="text/html" data-template-name="webcam-capture">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="webcam-capture">
+  <h3>Webcam Capture</h3>
+  <p>
+    This node captures a still image from a webcam using FFmpeg and outputs it as binary data.
+  </p>
+  <p>
+    Use the following <code>msg</code> properties to configure the capture:
+  </p>
+  <h4>Input-message</h4>
+    <ul>
+      <li><code>msg.inputDevice</code>: The camera device path (e.g., <code>/dev/video0</code> on Linux, <code>video=DeviceName</code> on Windows).</li>
+      <li><code>msg.width</code>: The width of the output image in pixels (default: 640).</li>
+      <li><code>msg.height</code>: The height of the output image in pixels (default: 480).</li>
+      <li><code>msg.outputFormat</code>: The format of the output image (<code>jpg</code>, <code>png</code>, <code>bmp</code>, or <code>tiff</code>). Default: <code>jpg</code>.</li>
+      <li><code>msg.forceStop</code>: Boolean value. When set to true, it triggers a forced stop.</li>
+    </ul>
+  <h4>Output-message on success</h4>
+    <ul>
+      <li><code>msg.payload</code>: The binary image data</li>
+      <li><code>msg.error</code>: <code>null</code></li>
+    </ul>
+  <h4>Output-message on failure</h4>
+    <ul>
+      <li><code>msg.payload</code>: <code>null</code>.</li>
+      <li><code>msg.error</code>: The error message.</li>
+    </ul>
+  <p>
+    Platform-specific device formats:
+  </p>
+  <ul>
+    <li><strong>Linux:</strong> <code>/dev/video0</code> (video4linux2)</li>
+    <li><strong>Windows:</strong> <code>video=DeviceName</code> (DirectShow)</li>
+    <li><strong>MacOS:</strong> <code>0</code> or camera index (AVFoundation)</li>
+  </ul>
+</script>
+  
