@@ -58,7 +58,7 @@ module.exports = function (RED) {
         return done();
       }
 
-      const outputFile = path.join(__dirname, `output_image.${outputFormat}`);
+      const outputFile = path.join(__dirname, `output/output_image.${outputFormat}`);
       msg.outputFile = outputFile;
       const ffmpegArgs = [
         '-f', 'video4linux2', // Linux-specific input format[0][1]
