@@ -42,6 +42,7 @@ module.exports = function (RED) {
       const width = msg.width || 640;
       const height = msg.height || 480;
       const outputFormat = msg.outputFormat || 'jpg';
+      const deleteImageFile = msg.deleteImageFile || false;     
       msg.inputDevice = inputDevice;
       msg.width = width;
       msg.height = height;
@@ -58,7 +59,8 @@ module.exports = function (RED) {
         return done();
       }
 
-      const outputFile = path.join(__dirname, `output/output_image.${outputFormat}`);
+      const shortId = node.id.substring(0, 8);
+      const outputFile = path.join(__dirname, `output/output_image_${shortId}.${outputFormat}`);
       msg.outputFile = outputFile;
       const ffmpegArgs = [
         '-f', 'video4linux2', // Linux-specific input format[0][1]
@@ -92,21 +94,39 @@ module.exports = function (RED) {
           done();
         } else {
           const fs = require('fs');
-          fs.readFile(outputFile, (err, data) => {
-            if (err) {
+          fs.readFile(outputFile, (error, data) => {
+            if (error) {
               msg.error = {
                 "code":error.code || null,
                 "signal":error.signal || null,
                 "message": error.message
               };
               msg.payload = null;
+              send(msg);
+              done();
             } else {
               msg.error = null;
               msg.payload = data; // Binary image data
+              send(msg);
+              done();
             }
-            send(msg);
-            done();
           });
+          if (deleteImageFile) {
+            fs.unlink(outputFile, (error) => {
+              if (error) {
+                node.warn();
+                msg.error = {
+                  "code":error.code || null,
+                  "signal":error.signal || null,
+                  "message": error.message
+                };
+                msg.payload = null;
+                send(msg);
+                done();
+              }
+              done();
+            });
+          }
         }
         child = null;
       });
