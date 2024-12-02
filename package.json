@@ -1,33 +1,32 @@
 {
     "name": "node-red-contrib-waku-webcam-capture",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "Node-RED node to capture images from a webcam and output as binary.",
     "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1"
     },
     "dependencies": {
-      "ffmpeg-static": "^5.0.0",
-      "child_process": "^1.0.2"
+        "child_process": "^1.0.2",
+        "ffmpeg-static": "^5.0.0"
     },
     "keywords": [
-      "node-red",
-      "webcam",
-      "ffmpeg"
-  ],
+        "node-red",
+        "webcam",
+        "ffmpeg"
+    ],
     "node-red": {
-      "nodes": {
-        "webcam-capture": "webcam-capture.js"
-      }
+        "nodes": {
+            "webcam-capture": "webcam-capture.js"
+        }
     },
     "author": "WAKU-TAKE-A",
     "license": "MIT",
     "repository": {
         "type": "git",
         "url": "https://github.com/WAKU-TAKE-A/node-red-contrib-waku-webcam-capture"
-      },
+    },
     "homepage": "https://github.com/WAKU-TAKE-A/node-red-contrib-waku-webcam-capture",
     "bugs": {
-      "url": "https://github.com/WAKU-TAKE-A/node-red-contrib-waku-webcam-capture/issues"
+        "url": "https://github.com/WAKU-TAKE-A/node-red-contrib-waku-webcam-capture/issues"
     }
-  }
-  
+}
